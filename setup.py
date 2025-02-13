@@ -8,7 +8,7 @@ setup(
     description="Async request through SOCKS5 proxy",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
-    #url="https://github.com/tuo-repo/mypackage",
+    url="https://github.com/AlessandroGia/asyncsocks5.git",
     packages=find_packages(),
     install_requires=[],
     classifiers=[
