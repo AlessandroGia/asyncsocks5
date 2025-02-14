@@ -1,15 +1,43 @@
+from typing import Optional
 
 class HTTPResponse:
-    def __init__(self, raw_response):
-        self.raw_response = raw_response
-        self.version = None
-        self.status = None
-        self.reason = None
-        self.headers = {}
-        self.body = None
+    """
+    A class to represent an HTTP response.
+
+    :param raw_response: The raw response from the server.
+    :type raw_response: str
+    :param version: The HTTP version.
+    :type version: str
+    :param status: The status code.
+    :type status: int
+    :param reason: The reason phrase.
+    :type reason: str
+    :param headers: The response headers.
+    :type headers: dict
+    :param body: The response body.
+    :type body: str
+    """
+    def __init__(self, raw_response: str):
+        """
+        Constructor for the HTTPResponse class.
+
+        :param raw_response: The raw response from the server.
+        :type raw_response: str
+        """
+        self.raw_response: str = raw_response
+        self.version: str = ""
+        self.status: int = 0
+        self.reason: str = ""
+        self.headers: dict = {}
+        self.body: str = ""
         self.parse_response()
 
     def parse_response(self):
+        """
+        Parses the raw response from the server.
+
+        :return:
+        """
         parts = self.raw_response.split("\r\n\r\n", 1)
         header_section = parts[0]
         self.body = parts[1] if len(parts) > 1 else ""

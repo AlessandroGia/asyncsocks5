@@ -4,10 +4,19 @@ from contextlib import asynccontextmanager
 from asyncsocks5.parser import HTTPResponse
 from asyncsocks5.rfc1928 import ReplyCodes
 
+from urllib.parse import urlparse
+
 import struct
 
 class AsyncProxySocks:
+    """
+    A context manager that allows you to make HTTP requests through a SOCKS5 proxy server.
 
+    :param server_ip: The IP address of the SOCKS5 proxy server.
+    :param server_port: The port of the SOCKS5 proxy server.
+    :param username: The username for the SOCKS5 proxy server.
+    :param password: The password for the SOCKS5 proxy server
+    """
     def __init__(self, server_ip: str, server_port: int, username: str = None, password: str = None):
         self.__server_ip = server_ip
         self.__server_port = server_port
@@ -22,6 +31,14 @@ class AsyncProxySocks:
 
     @staticmethod
     async def __fetch_http(reader: StreamReader, writer: StreamWriter, url: str) -> HTTPResponse:
+        """
+        Fetches an HTTP response from a server.
+
+        :param reader:
+        :param writer:
+        :param url:
+        :return:
+        """
         writer.write(f"GET / HTTP/1.1\r\nHost: {url}\r\nConnection: close\r\n\r\n".encode())
         await writer.drain()
 
@@ -73,7 +90,18 @@ class AsyncProxySocks:
 
     @asynccontextmanager
     async def get(self, url: str, port: int = 80) -> HTTPResponse:
-        url = url.removeprefix("http://").rstrip("/")
+        """
+        Fetches an HTTP response from a server.
+
+        :param url: url of the destination server
+        :type url: str
+        :param port: port of the destination server, defaults to 80
+        :type port: int, optional
+        :return: http response
+        :rtype: HTTPResponse
+        """
+        url = urlparse(url).netloc
+
         writer = None
         try:
             reader, writer = await open_connection(self.__server_ip, self.__server_port)

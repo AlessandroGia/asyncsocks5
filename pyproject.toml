@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asyncsocks5"
+version = "0.1.0"
+authors = [
+    {name = "Alessandro Giacento", email = "alexgiacento@gmail.com"}
+]
+description = "Async requests through SOCKS5 proxy"
+readme = "README.md"
+license = { file = "LICENSE"}
+requires-python = ">= 3.8"
+
+[project.urls]
+Repository = "https://github.com/AlessandroGia/asyncsocks5.git"
